@@ -2,15 +2,7 @@ package com.klu.springbootsdp3;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -21,7 +13,8 @@ public class UserController
 
     @PostMapping("/User/add")
     @ResponseBody
-    public String addemprecord(@RequestBody User emp)
+    @CrossOrigin
+    public Result addemprecord(@RequestBody User emp)
     {
         String id="SDP3"+emp.getStdid();
         emp.setId(id);
@@ -30,7 +23,7 @@ public class UserController
 
     @PutMapping("/User/update")
     @ResponseBody
-    public String updateemprecord(@RequestBody User emp)
+    public Result updateemprecord(@RequestBody User emp)
     {
         return empservice.updateUserrecord(emp);
     }
@@ -44,6 +37,7 @@ public class UserController
 
     @GetMapping("/User/getall")
     @ResponseBody
+    @CrossOrigin
     public List<User> getallemprecords()
     {
         return empservice.getallemprecords();
@@ -55,5 +49,25 @@ public class UserController
     {
         return empservice.getemprecordbyid(id);
     }
+
+
+    @PostMapping("/User/login")
+    @ResponseBody
+    @CrossOrigin
+    public Result checkLogin(@RequestBody User emp)
+    {
+        Result res=empservice.loginCheck(emp.getId(),emp.getPassword());
+    System.out.println(res.getRes());
+    return res;
+    }
+
+    @GetMapping("/User/bmi")
+    @ResponseBody
+    @CrossOrigin
+    public String checkLogin()
+    {
+        return empservice.bmi();
+    }
+
 
 }

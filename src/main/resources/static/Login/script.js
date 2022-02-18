@@ -16,8 +16,15 @@ function signUp(){
 	let stdid=document.getElementById("stdid").value;
 	let email=document.getElementById("email").value;
 	let mobile=document.getElementById("mobile").value;
-	let gender=document.getElementById("gender").value;
+	let gender;
 	let password=document.getElementById("password").value;
+	
+	var ele = document.getElementsByName('gender');
+              
+	for(i = 0; i < ele.length; i++) {
+		if(ele[i].checked)
+		gender=ele[i].value;
+	}
 
 	let data={
 		"stdid":stdid,
@@ -42,6 +49,43 @@ function signUp(){
 
 
 
+function reset(){
+
+	let name=document.getElementById("uname").value;
+	let email=document.getElementById("email").value;
+	let mobile=document.getElementById("mobile").value;
+	let gender;
+	let password=document.getElementById("newpassword").value;
+	
+
+	let data={
+		"name":name,
+		"email":email,
+		"mobile":mobile,
+		"password":password
+	}
+
+
+	postData("http://localhost:2022/User/add",data).then(res=>{
+		console.log(res)
+	
+	
+	});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 function login() {
   let uname=document.getElementById("uname").value;
   let pass=document.getElementById("pass").value;
@@ -53,9 +97,10 @@ console.log(pass);
 		console.log(res)
 	if(res.res!="NotFound"){
 		localStorage.setItem("id",res.res)
-		window.location.replace("../HomePage-Blog/index.html");
+		window.location.replace("../Home/index.html");
 
 	}
+
 	else{
 		alert("Wrong Credentials")
 	}
